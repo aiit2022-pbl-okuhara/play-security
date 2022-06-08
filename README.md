@@ -1,39 +1,60 @@
-# Welcome to Buffalo
+# play-security
 
-Thank you for choosing Buffalo for your web development needs.
+http://localhost:3000/
 
-## Database Setup
-
-It looks like you chose to set up your application using a database! Fantastic!
-
-The first thing you need to do is open up the "database.yml" file and edit it to use the correct usernames, passwords, hosts, etc... that are appropriate for your environment.
-
-You will also need to make sure that **you** start/install the database of your choice. Buffalo **won't** install and start it for you.
-
-### Create Your Databases
-
-Ok, so you've edited the "database.yml" file and started your database, now Buffalo can create the databases in that file for you:
-
-```console
-buffalo pop create -a
+## Install Framework
+### Windows
+Buffalo can be installed using the [Scoop](https://scoop.sh/) package manager:
+```
+C:\> scoop install buffalo
+C:\> scoop install gcc
 ```
 
-## Starting the Application
-
-Buffalo ships with a command that will watch your application and automatically rebuild the Go binary and any assets for you. To do that run the "buffalo dev" command:
-
-```console
-buffalo dev
+### Homebrew (macOS)
+Buffalo can be installed using the [Homebrew](https://brew.sh/) package manager:
+```
+$ brew install gobuffalo/tap/buffalo
 ```
 
-If you point your browser to [http://127.0.0.1:3000](http://127.0.0.1:3000) you should see a "Welcome to Buffalo!" page.
+## Database settings
 
-**Congratulations!** You now have your Buffalo application up and running.
+### Start Postgres
+```
+$ docker-compose up -d
+```
 
-## What Next?
+### Install Pop 
+Windows:
+```
+C:\> go install github.com/gobuffalo/pop/v6/soda@latest
+```
 
-We recommend you heading over to [http://gobuffalo.io](http://gobuffalo.io) and reviewing all of the great documentation there.
+Homebrew (macOS):
+```
+$ brew install gobuffalo/tap/pop
+```
 
-Good luck!
+### Create databases
 
-[Powered by Buffalo](http://gobuffalo.io)
+```
+$ buffalo pop create -a
+```
+
+### How to access the local database 
+
+```
+$ docker exec -it play-security-database bin/bash
+
+Container...
+$ psql -U postgres
+
+List of databases...
+postgres=# \l
+```
+
+## Create Application
+### Project
+
+```
+$ buffalo new play-security --module github.com/aiit2022-pbl-okuhara/play-security --db-type postgres
+```
