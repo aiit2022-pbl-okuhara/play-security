@@ -1,8 +1,13 @@
 # play-security
 
-http://localhost:3000/
+## Launch the applicaiton
+```
+$ buffalo dev
+```
 
-## Install Framework
+Please access http://localhost:3000/ 
+
+## Install Buffalo
 ### Windows
 Buffalo can be installed using the [Scoop](https://scoop.sh/) package manager:
 ```
@@ -52,7 +57,35 @@ List of databases...
 postgres=# \l
 ```
 
-## Create Application
+## Install frontend tools
+### Windows
+```
+C:\> scoop search node
+...
+C:\> scoop bucket add main
+...
+C:\> scoop install main/nodejs
+...
+C:\> npm -v
+8.11.0
+C:\> npm install --global yarn
+...
+```
+
+### Homebrew (macOS)
+```
+$ brew install node
+...
+$ npm -v
+8.11.0
+$ npm install --global yarn 
+```
+
+-----
+
+ここから先は実行をする必要はありません !!!
+
+## Create the application
 ### Project
 
 ```
