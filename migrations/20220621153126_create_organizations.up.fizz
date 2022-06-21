@@ -1,0 +1,10 @@
+create_table("organizations") {
+  t.Column("id", "uuid", {primary: true, "default_raw": "gen_random_uuid()"})
+  t.Column("company_id", "uuid", {"null": false})
+  t.Column("display_id", "integer", {"null": false})
+  t.Column("name", "text", {"null": false})
+  t.Column("report_send_emails", "text", {"null": false})
+  t.ForeignKey("company_id", {"companies": ["id"]}, {"on_delete": "cascade"})
+}
+
+add_index("organizations", "display_id", {"unique": true})
