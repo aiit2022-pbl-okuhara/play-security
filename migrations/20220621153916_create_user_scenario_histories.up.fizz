@@ -2,7 +2,7 @@ create_table("user_scenario_histories") {
   t.Column("id", "uuid", {primary: true, "default_raw": "gen_random_uuid()"})
   t.Column("user_id", "uuid")
   t.Column("scenario_id", "uuid")
-  t.Column("total_score", "integer")
+  t.Column("score", "integer")
   t.ForeignKey("user_id", {"users": ["id"]}, {"on_delete": "cascade"})
   t.ForeignKey("scenario_id", {"scenarios": ["id"]}, {"on_delete": "cascade"})
 }

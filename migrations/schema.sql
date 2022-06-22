@@ -195,7 +195,7 @@ CREATE TABLE public.user_scenario_histories (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     user_id uuid NOT NULL,
     scenario_id uuid NOT NULL,
-    total_score integer NOT NULL,
+    score integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
