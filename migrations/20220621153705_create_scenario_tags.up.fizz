@@ -1,0 +1,5 @@
+create_table("scenario_tags") {
+  t.Column("id", "uuid", {primary: true, "default_raw": "gen_random_uuid()"})
+  t.Column("tag_id", "uuid")
+  t.ForeignKey("tag_id", {"tags": ["id"]}, {"on_delete": "cascade"})
+}
