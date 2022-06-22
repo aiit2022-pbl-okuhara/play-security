@@ -92,8 +92,7 @@ CREATE TABLE public.scenario_quizzes (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     scenario_id uuid NOT NULL,
     question text NOT NULL,
-    success_message text NOT NULL,
-    failure_message text NOT NULL,
+    failure_message text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -123,10 +122,11 @@ CREATE TABLE public.scenarios (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     organization_id uuid NOT NULL,
     role_id uuid NOT NULL,
-    scenario_title character varying(255) NOT NULL,
-    scenario_overview text NOT NULL,
-    scenario_description text NOT NULL,
-    total_score integer NOT NULL,
+    title character varying(255) NOT NULL,
+    overview text NOT NULL,
+    description text NOT NULL,
+    highest_score integer NOT NULL,
+    result_message text NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -195,7 +195,7 @@ CREATE TABLE public.user_scenario_histories (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     user_id uuid NOT NULL,
     scenario_id uuid NOT NULL,
-    score integer NOT NULL,
+    total_score integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
