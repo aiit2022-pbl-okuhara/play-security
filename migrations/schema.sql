@@ -174,20 +174,6 @@ CREATE TABLE public.user_authentication_logs (
 ALTER TABLE public.user_authentication_logs OWNER TO postgres;
 
 --
--- Name: user_organization_belonging; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.user_organization_belonging (
-    user_id uuid NOT NULL,
-    organization_id uuid NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.user_organization_belonging OWNER TO postgres;
-
---
 -- Name: user_scenario_histories; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -227,6 +213,7 @@ ALTER TABLE public.user_scenario_quiz_histories OWNER TO postgres;
 
 CREATE TABLE public.users (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
+    organization_id uuid NOT NULL,
     last_name character varying(128) NOT NULL,
     first_name character varying(128) NOT NULL,
     last_name_kana character varying(128) NOT NULL,
@@ -424,22 +411,6 @@ ALTER TABLE ONLY public.user_authentication_logs
 
 
 --
--- Name: user_organization_belonging user_organization_belonging_organization_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_organization_belonging
-    ADD CONSTRAINT user_organization_belonging_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
-
-
---
--- Name: user_organization_belonging user_organization_belonging_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_organization_belonging
-    ADD CONSTRAINT user_organization_belonging_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
-
-
---
 -- Name: user_scenario_histories user_scenario_histories_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -493,6 +464,14 @@ ALTER TABLE ONLY public.user_scenario_quiz_histories
 
 ALTER TABLE ONLY public.user_scenario_quiz_histories
     ADD CONSTRAINT user_scenario_quiz_histories_user_scenario_history_id_fkey FOREIGN KEY (user_scenario_history_id) REFERENCES public.user_scenario_histories(id) ON DELETE CASCADE;
+
+
+--
+-- Name: users users_organization_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
 
 
 --
