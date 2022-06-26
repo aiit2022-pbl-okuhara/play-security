@@ -1,4 +1,4 @@
-create_table("scenario_quizzes") {
+create_table("quizzes") {
   t.Column("id", "uuid", {primary: true, "default_raw": "gen_random_uuid()"})
   t.Column("scenario_id", "uuid")
   t.Column("question", "text")
