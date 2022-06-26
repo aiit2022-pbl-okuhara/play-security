@@ -1,7 +1,5 @@
 create_table("quizzes") {
   t.Column("id", "uuid", {primary: true, "default_raw": "gen_random_uuid()"})
-  t.Column("scenario_id", "uuid")
   t.Column("question", "text")
   t.Column("failure_message", "text", {"null": true})
-  t.ForeignKey("scenario_id", {"scenarios": ["id"]}, {"on_delete": "cascade"})
 }

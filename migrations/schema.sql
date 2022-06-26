@@ -59,9 +59,6 @@ CREATE TABLE public.quiz_options (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     quiz_id uuid NOT NULL,
     answer character varying(255) NOT NULL,
-    score integer NOT NULL,
-    next_quiz_id uuid,
-    next_status integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -75,7 +72,6 @@ ALTER TABLE public.quiz_options OWNER TO postgres;
 
 CREATE TABLE public.quizzes (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
-    scenario_id uuid NOT NULL,
     question text NOT NULL,
     failure_message text,
     created_at timestamp without time zone NOT NULL,
@@ -99,6 +95,43 @@ CREATE TABLE public.roles (
 
 
 ALTER TABLE public.roles OWNER TO postgres;
+
+--
+-- Name: scenario_quiz_options; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.scenario_quiz_options (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    scenario_quiz_id uuid NOT NULL,
+    quiz_option_id uuid NOT NULL,
+    answer character varying(255),
+    score integer NOT NULL,
+    next_scenario_quiz_id uuid,
+    status integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.scenario_quiz_options OWNER TO postgres;
+
+--
+-- Name: scenario_quizzes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.scenario_quizzes (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    scenario_id uuid NOT NULL,
+    quiz_id uuid NOT NULL,
+    first boolean DEFAULT false NOT NULL,
+    question text,
+    failure_message text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.scenario_quizzes OWNER TO postgres;
 
 --
 -- Name: scenarios; Type: TABLE; Schema: public; Owner: postgres
@@ -189,6 +222,25 @@ CREATE TABLE public.user_authentication_logs (
 ALTER TABLE public.user_authentication_logs OWNER TO postgres;
 
 --
+-- Name: user_quiz_histories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.user_quiz_histories (
+    id uuid DEFAULT gen_random_uuid() NOT NULL,
+    user_scenario_history_id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    scenario_id uuid NOT NULL,
+    scenario_quiz_id uuid NOT NULL,
+    scenario_quiz_option_id uuid NOT NULL,
+    score integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.user_quiz_histories OWNER TO postgres;
+
+--
 -- Name: user_scenario_histories; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -203,25 +255,6 @@ CREATE TABLE public.user_scenario_histories (
 
 
 ALTER TABLE public.user_scenario_histories OWNER TO postgres;
-
---
--- Name: user_scenario_quiz_histories; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.user_scenario_quiz_histories (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    user_scenario_history_id uuid NOT NULL,
-    user_id uuid NOT NULL,
-    scenario_id uuid NOT NULL,
-    quiz_id uuid NOT NULL,
-    quiz_option_id uuid NOT NULL,
-    score integer NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE public.user_scenario_quiz_histories OWNER TO postgres;
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
@@ -281,6 +314,22 @@ ALTER TABLE ONLY public.roles
 
 
 --
+-- Name: scenario_quiz_options scenario_quiz_options_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.scenario_quiz_options
+    ADD CONSTRAINT scenario_quiz_options_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scenario_quizzes scenario_quizzes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.scenario_quizzes
+    ADD CONSTRAINT scenario_quizzes_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: scenarios scenarios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -321,19 +370,19 @@ ALTER TABLE ONLY public.user_authentication_logs
 
 
 --
+-- Name: user_quiz_histories user_quiz_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_quiz_histories
+    ADD CONSTRAINT user_quiz_histories_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_scenario_histories user_scenario_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.user_scenario_histories
     ADD CONSTRAINT user_scenario_histories_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_scenario_quiz_histories user_scenario_quiz_histories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_scenario_quiz_histories
-    ADD CONSTRAINT user_scenario_quiz_histories_pkey PRIMARY KEY (id);
 
 
 --
@@ -367,14 +416,6 @@ ALTER TABLE ONLY public.organizations
 
 
 --
--- Name: quiz_options quiz_options_next_quiz_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.quiz_options
-    ADD CONSTRAINT quiz_options_next_quiz_id_fkey FOREIGN KEY (next_quiz_id) REFERENCES public.quizzes(id) ON DELETE CASCADE;
-
-
---
 -- Name: quiz_options quiz_options_quiz_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -383,19 +424,51 @@ ALTER TABLE ONLY public.quiz_options
 
 
 --
--- Name: quizzes quizzes_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.quizzes
-    ADD CONSTRAINT quizzes_scenario_id_fkey FOREIGN KEY (scenario_id) REFERENCES public.scenarios(id) ON DELETE CASCADE;
-
-
---
 -- Name: roles roles_organization_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.roles
     ADD CONSTRAINT roles_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES public.organizations(id) ON DELETE CASCADE;
+
+
+--
+-- Name: scenario_quiz_options scenario_quiz_options_next_scenario_quiz_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.scenario_quiz_options
+    ADD CONSTRAINT scenario_quiz_options_next_scenario_quiz_id_fkey FOREIGN KEY (next_scenario_quiz_id) REFERENCES public.scenario_quizzes(id) ON DELETE CASCADE;
+
+
+--
+-- Name: scenario_quiz_options scenario_quiz_options_quiz_option_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.scenario_quiz_options
+    ADD CONSTRAINT scenario_quiz_options_quiz_option_id_fkey FOREIGN KEY (quiz_option_id) REFERENCES public.quiz_options(id) ON DELETE CASCADE;
+
+
+--
+-- Name: scenario_quiz_options scenario_quiz_options_scenario_quiz_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.scenario_quiz_options
+    ADD CONSTRAINT scenario_quiz_options_scenario_quiz_id_fkey FOREIGN KEY (scenario_quiz_id) REFERENCES public.scenario_quizzes(id) ON DELETE CASCADE;
+
+
+--
+-- Name: scenario_quizzes scenario_quizzes_quiz_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.scenario_quizzes
+    ADD CONSTRAINT scenario_quizzes_quiz_id_fkey FOREIGN KEY (quiz_id) REFERENCES public.quizzes(id) ON DELETE CASCADE;
+
+
+--
+-- Name: scenario_quizzes scenario_quizzes_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.scenario_quizzes
+    ADD CONSTRAINT scenario_quizzes_scenario_id_fkey FOREIGN KEY (scenario_id) REFERENCES public.scenarios(id) ON DELETE CASCADE;
 
 
 --
@@ -447,6 +520,46 @@ ALTER TABLE ONLY public.user_authentication_logs
 
 
 --
+-- Name: user_quiz_histories user_quiz_histories_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_quiz_histories
+    ADD CONSTRAINT user_quiz_histories_scenario_id_fkey FOREIGN KEY (scenario_id) REFERENCES public.scenarios(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_quiz_histories user_quiz_histories_scenario_quiz_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_quiz_histories
+    ADD CONSTRAINT user_quiz_histories_scenario_quiz_id_fkey FOREIGN KEY (scenario_quiz_id) REFERENCES public.scenario_quizzes(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_quiz_histories user_quiz_histories_scenario_quiz_option_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_quiz_histories
+    ADD CONSTRAINT user_quiz_histories_scenario_quiz_option_id_fkey FOREIGN KEY (scenario_quiz_option_id) REFERENCES public.scenario_quiz_options(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_quiz_histories user_quiz_histories_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_quiz_histories
+    ADD CONSTRAINT user_quiz_histories_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_quiz_histories user_quiz_histories_user_scenario_history_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.user_quiz_histories
+    ADD CONSTRAINT user_quiz_histories_user_scenario_history_id_fkey FOREIGN KEY (user_scenario_history_id) REFERENCES public.user_scenario_histories(id) ON DELETE CASCADE;
+
+
+--
 -- Name: user_scenario_histories user_scenario_histories_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -460,46 +573,6 @@ ALTER TABLE ONLY public.user_scenario_histories
 
 ALTER TABLE ONLY public.user_scenario_histories
     ADD CONSTRAINT user_scenario_histories_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
-
-
---
--- Name: user_scenario_quiz_histories user_scenario_quiz_histories_quiz_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_scenario_quiz_histories
-    ADD CONSTRAINT user_scenario_quiz_histories_quiz_id_fkey FOREIGN KEY (quiz_id) REFERENCES public.quizzes(id) ON DELETE CASCADE;
-
-
---
--- Name: user_scenario_quiz_histories user_scenario_quiz_histories_quiz_option_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_scenario_quiz_histories
-    ADD CONSTRAINT user_scenario_quiz_histories_quiz_option_id_fkey FOREIGN KEY (quiz_option_id) REFERENCES public.quiz_options(id) ON DELETE CASCADE;
-
-
---
--- Name: user_scenario_quiz_histories user_scenario_quiz_histories_scenario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_scenario_quiz_histories
-    ADD CONSTRAINT user_scenario_quiz_histories_scenario_id_fkey FOREIGN KEY (scenario_id) REFERENCES public.scenarios(id) ON DELETE CASCADE;
-
-
---
--- Name: user_scenario_quiz_histories user_scenario_quiz_histories_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_scenario_quiz_histories
-    ADD CONSTRAINT user_scenario_quiz_histories_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
-
-
---
--- Name: user_scenario_quiz_histories user_scenario_quiz_histories_user_scenario_history_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_scenario_quiz_histories
-    ADD CONSTRAINT user_scenario_quiz_histories_user_scenario_history_id_fkey FOREIGN KEY (user_scenario_history_id) REFERENCES public.user_scenario_histories(id) ON DELETE CASCADE;
 
 
 --
