@@ -26,15 +26,20 @@ func AuthNew(c buffalo.Context) error {
 
 // AuthCreate attempts to log the user in with an existing account.
 func AuthCreate(c buffalo.Context) error {
+	o := &models.Organization{}
 	u := &models.User{}
+
 	if err := c.Bind(u); err != nil {
 		return errors.WithStack(err)
 	}
 
 	tx := c.Value("tx").(*pop.Connection)
 
-	// find a user with the email
-	err := tx.Where("email = ?", strings.ToLower(strings.TrimSpace(u.Email))).First(u)
+	// find an organization by display_id
+	err := tx.Where("display_id = ?", u.DisplayID).First(o)
+
+	// find a user with the email and organization_id
+	err = tx.Where("email = ?", strings.ToLower(strings.TrimSpace(u.Email))).Where("organization_id = ?", o.ID).First(u)
 
 	// helper function to handle bad attempts
 	bad := func() error {
@@ -49,7 +54,7 @@ func AuthCreate(c buffalo.Context) error {
 
 	if err != nil {
 		if errors.Cause(err) == sql.ErrNoRows {
-			// couldn't find an user with the supplied email address.
+			// couldn't find a user with the supplied email address.
 			return bad()
 		}
 		return errors.WithStack(err)

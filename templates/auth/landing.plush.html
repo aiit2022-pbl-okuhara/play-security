@@ -15,8 +15,7 @@
     <h1><%= current_user.Email %></h1>
     <%= linkTo(authPath(), {data-method: "DELETE"}){ %>Sign Out<% } %>
   <% } else { %>
-    <%= linkTo(newAuthPath()){ %>Sign In<% } %>
+    <%= linkTo(signinPath()){ %>Sign In<% } %>
     <%= linkTo(newUsersPath()){ %>Register<% } %>
   <% } %>
 </div>
-
