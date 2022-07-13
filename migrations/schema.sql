@@ -105,7 +105,7 @@ CREATE TABLE public.scenario_quiz_options (
     scenario_quiz_id uuid NOT NULL,
     quiz_option_id uuid NOT NULL,
     answer character varying(255),
-    score integer NOT NULL,
+    score integer DEFAULT 0 NOT NULL,
     next_scenario_quiz_id uuid,
     status integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
@@ -232,7 +232,7 @@ CREATE TABLE public.user_quiz_histories (
     scenario_id uuid NOT NULL,
     scenario_quiz_id uuid NOT NULL,
     scenario_quiz_option_id uuid NOT NULL,
-    score integer NOT NULL,
+    score integer DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -248,7 +248,8 @@ CREATE TABLE public.user_scenario_histories (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     user_id uuid NOT NULL,
     scenario_id uuid NOT NULL,
-    total_score integer NOT NULL,
+    total_score integer DEFAULT 0 NOT NULL,
+    played_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );

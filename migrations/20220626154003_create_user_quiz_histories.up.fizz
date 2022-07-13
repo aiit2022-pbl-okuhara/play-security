@@ -5,7 +5,7 @@ create_table("user_quiz_histories") {
   t.Column("scenario_id", "uuid")
   t.Column("scenario_quiz_id", "uuid")
   t.Column("scenario_quiz_option_id", "uuid")
-  t.Column("score", "integer")
+  t.Column("score", "integer", {"default": 0})
   t.ForeignKey("user_scenario_history_id", {"user_scenario_histories": ["id"]}, {"on_delete": "cascade"})
   t.ForeignKey("user_id", {"users": ["id"]}, {"on_delete": "cascade"})
   t.ForeignKey("scenario_id", {"scenarios": ["id"]}, {"on_delete": "cascade"})

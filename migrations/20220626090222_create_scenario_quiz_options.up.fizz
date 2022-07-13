@@ -3,7 +3,7 @@ create_table("scenario_quiz_options") {
   t.Column("scenario_quiz_id", "uuid")
   t.Column("quiz_option_id", "uuid")
   t.Column("answer", "string", {"size": 255, "null": true})
-  t.Column("score", "integer")
+  t.Column("score", "integer", {"default": 0})
   t.Column("next_scenario_quiz_id", "uuid", {"null": true})
   t.Column("status", "integer")
   t.ForeignKey("scenario_quiz_id", {"scenario_quizzes": ["id"]}, {"on_delete": "cascade"})
