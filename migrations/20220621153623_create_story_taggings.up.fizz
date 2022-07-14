@@ -1,4 +1,4 @@
-create_table("stories_tags") {
+create_table("story_taggings") {
   t.Column("id", "uuid", {primary: true, "default_raw": "gen_random_uuid()"})
   t.Column("story_id", "uuid")
   t.Column("tag_id", "uuid")

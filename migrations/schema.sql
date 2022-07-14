@@ -143,7 +143,7 @@ CREATE TABLE public.scenarios (
     role_id uuid NOT NULL,
     overview text NOT NULL,
     description text NOT NULL,
-    highest_score integer NOT NULL,
+    highest_score integer DEFAULT 0 NOT NULL,
     result_message text NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -179,10 +179,10 @@ CREATE TABLE public.stories (
 ALTER TABLE public.stories OWNER TO postgres;
 
 --
--- Name: stories_tags; Type: TABLE; Schema: public; Owner: postgres
+-- Name: story_taggings; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.stories_tags (
+CREATE TABLE public.story_taggings (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     story_id uuid NOT NULL,
     tag_id uuid NOT NULL,
@@ -191,7 +191,7 @@ CREATE TABLE public.stories_tags (
 );
 
 
-ALTER TABLE public.stories_tags OWNER TO postgres;
+ALTER TABLE public.story_taggings OWNER TO postgres;
 
 --
 -- Name: tags; Type: TABLE; Schema: public; Owner: postgres
@@ -347,11 +347,11 @@ ALTER TABLE ONLY public.stories
 
 
 --
--- Name: stories_tags stories_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: story_taggings story_taggings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.stories_tags
-    ADD CONSTRAINT stories_tags_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.story_taggings
+    ADD CONSTRAINT story_taggings_pkey PRIMARY KEY (id);
 
 
 --
@@ -497,19 +497,19 @@ ALTER TABLE ONLY public.stories
 
 
 --
--- Name: stories_tags stories_tags_story_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: story_taggings story_taggings_story_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.stories_tags
-    ADD CONSTRAINT stories_tags_story_id_fkey FOREIGN KEY (story_id) REFERENCES public.stories(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.story_taggings
+    ADD CONSTRAINT story_taggings_story_id_fkey FOREIGN KEY (story_id) REFERENCES public.stories(id) ON DELETE CASCADE;
 
 
 --
--- Name: stories_tags stories_tags_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: story_taggings story_taggings_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.stories_tags
-    ADD CONSTRAINT stories_tags_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES public.tags(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.story_taggings
+    ADD CONSTRAINT story_taggings_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES public.tags(id) ON DELETE CASCADE;
 
 
 --
