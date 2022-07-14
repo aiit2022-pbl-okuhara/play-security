@@ -18,6 +18,15 @@
 
 </header>
 
+<div class="auth-center">
+  <%= if (current_user) { %>
+  <h1><%= current_user.Email %></h1>
+  <%= linkTo(signoutPath()){ %>ログアウト<% } %>
+  <% } else { %>
+  <%= linkTo(signinPath()){ %>ログイン<% } %> | <%= linkTo(newUsersPath()){ %>ユーザー登録<% } %>
+  <% } %>
+</div>
+
 <div class="row">
   <div class="col-md-12">
     <div class="subtitle">
