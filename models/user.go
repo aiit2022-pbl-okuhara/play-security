@@ -15,14 +15,17 @@ import (
 
 // User is a generated model from buffalo-auth, it serves as the base for username/password authentication.
 type User struct {
-	ID             uuid.UUID     `json:"id" db:"id"`
-	OrganizationID uuid.UUID     `json:"organization_id" db:"organization_id"`
-	CreatedAt      time.Time     `json:"created_at" db:"created_at"`
-	UpdatedAt      time.Time     `json:"updated_at" db:"updated_at"`
-	Nickname       string        `json:"nickname" db:"nickname"`
-	Email          string        `json:"email" db:"email"`
-	PasswordHash   string        `json:"password_hash" db:"password_hash"`
-	Organization   *Organization `json:"organization,omitempty" belongs_to:"organization"`
+	ID                     uuid.UUID               `json:"id" db:"id"`
+	OrganizationID         uuid.UUID               `json:"organization_id" db:"organization_id"`
+	CreatedAt              time.Time               `json:"created_at" db:"created_at"`
+	UpdatedAt              time.Time               `json:"updated_at" db:"updated_at"`
+	Nickname               string                  `json:"nickname" db:"nickname"`
+	Email                  string                  `json:"email" db:"email"`
+	PasswordHash           string                  `json:"password_hash" db:"password_hash"`
+	Organization           *Organization           `json:"organization,omitempty" belongs_to:"organization"`
+	UserAuthenticationLogs []UserAuthenticationLog `json:"user_authentication_logs,omitempty" has_many:"user_authentication_logs"`
+	UserScenarioHistories  []UserScenarioHistory   `json:"user_scenario_histories,omitempty" has_many:"user_scenario_histories"`
+	UserQuizHistories      []UserQuizHistory       `json:"user_quiz_histories,omitempty" has_many:"user_quiz_histories"`
 
 	DisplayID            int    `json:"-" db:"-"`
 	Password             string `json:"-" db:"-"`
@@ -47,7 +50,7 @@ func (u User) String() string {
 	return string(ju)
 }
 
-// Users are not required by pop and may be deleted
+// Users is not required by pop and may be deleted
 type Users []User
 
 // String is not required by pop and may be deleted

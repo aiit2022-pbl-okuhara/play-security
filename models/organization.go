@@ -20,6 +20,8 @@ type Organization struct {
 	UpdatedAt        time.Time `json:"updated_at" db:"updated_at"`
 	Company          *Company  `json:"company,omitempty" belongs_to:"company"`
 	Users            []User    `json:"users,omitempty" has_many:"users"`
+	Roles            []Role    `json:"roles,omitempty" has_many:"roles"`
+	Stories          []Story   `json:"stories,omitempty" has_many:"stories"`
 }
 
 // String is not required by pop and may be deleted
@@ -28,7 +30,7 @@ func (o Organization) String() string {
 	return string(jo)
 }
 
-// Organizations are not required by pop and may be deleted
+// Organizations is not required by pop and may be deleted
 type Organizations []Organization
 
 // String is not required by pop and may be deleted

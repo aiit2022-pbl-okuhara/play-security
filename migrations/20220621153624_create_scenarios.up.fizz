@@ -4,7 +4,7 @@ create_table("scenarios") {
   t.Column("role_id", "uuid")
   t.Column("overview", "text")
   t.Column("description", "text")
-  t.Column("highest_score", "integer")
+  t.Column("highest_score", "integer", {"default": 0})
   t.Column("result_message", "text")
   t.ForeignKey("story_id", {"stories": ["id"]}, {"on_delete": "cascade"})
   t.ForeignKey("role_id", {"roles": ["id"]}, {"on_delete": "cascade"})
