@@ -20,6 +20,8 @@
     <h1>Register</h1>
 
     <%= form_for(user, {action: usersPath()}) { %>
+      <%= f.InputTag("DisplayID") %>
+      <%= f.InputTag("Nickname") %>
       <%= f.InputTag("Email") %>
       <%= f.InputTag("Password", {type: "password"}) %>
       <%= f.InputTag("PasswordConfirmation", {type: "password"}) %>
