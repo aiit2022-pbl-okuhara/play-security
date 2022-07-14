@@ -3,25 +3,32 @@ package actions
 import (
 	"github.com/aiit2022-pbl-okuhara/play-security/models"
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/pop"
+	"github.com/gobuffalo/pop/v6"
 	"github.com/pkg/errors"
 )
 
 // UsersNew renders the users form
 func UsersNew(c buffalo.Context) error {
 	u := models.User{}
+	u.DisplayID = 1
 	c.Set("user", u)
 	return c.Render(200, r.HTML("users/new.plush.html"))
 }
 
 // UsersCreate registers a new user with the application.
 func UsersCreate(c buffalo.Context) error {
+	o := &models.Organization{}
 	u := &models.User{}
 	if err := c.Bind(u); err != nil {
 		return errors.WithStack(err)
 	}
 
 	tx := c.Value("tx").(*pop.Connection)
+
+	// find an organization by display_id
+	err := tx.Where("display_id = ?", u.DisplayID).First(o)
+	u.OrganizationID = o.ID
+
 	verrs, err := u.Create(tx)
 	if err != nil {
 		return errors.WithStack(err)

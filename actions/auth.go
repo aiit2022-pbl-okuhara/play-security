@@ -7,8 +7,8 @@ import (
 
 	"github.com/aiit2022-pbl-okuhara/play-security/models"
 	"github.com/gobuffalo/buffalo"
-	"github.com/gobuffalo/pop"
-	"github.com/gobuffalo/validate"
+	"github.com/gobuffalo/pop/v6"
+	"github.com/gobuffalo/validate/v3"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 )
