@@ -14,6 +14,7 @@ require (
 	github.com/gobuffalo/pop/v6 v6.0.4
 	github.com/gobuffalo/suite/v4 v4.0.2
 	github.com/gobuffalo/validate/v3 v3.3.1
+	github.com/gobuffalo/x v0.0.0-20190224155809-6bb134105960
 	github.com/gofrs/uuid v4.2.0+incompatible
 	github.com/markbates/grift v1.5.0
 	github.com/pkg/errors v0.9.1

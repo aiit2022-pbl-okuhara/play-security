@@ -1,0 +1,8 @@
+<div class="py-4 mb-2">
+  <h3 class="d-inline-block">Edit Mypage</h3>
+</div>
+
+<%= formFor(mypage, {action: mypagePath({ mypage_id: mypage.ID }), method: "PUT"}) { %>
+  <%= partial("mypages/form.html") %>
+  <%= linkTo(mypagePath({ mypage_id: mypage.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

@@ -1,0 +1,8 @@
+<div class="py-4 mb-2">
+  <h3 class="d-inline-block">Edit Quiz</h3>
+</div>
+
+<%= formFor(quiz, {action: quizPath({ quiz_id: quiz.ID }), method: "PUT"}) { %>
+  <%= partial("quizzes/form.html") %>
+  <%= linkTo(quizPath({ quiz_id: quiz.ID }), {class: "btn btn-warning", "data-confirm": "Are you sure?", body: "Cancel"}) %>
+<% } %>

@@ -1,0 +1,6 @@
+- id: "quiz.created.success"
+  translation: "Quiz was successfully created."
+- id: "quiz.updated.success"
+  translation: "Quiz was successfully updated."
+- id: "quiz.destroyed.success"
+  translation: "Quiz was successfully destroyed."

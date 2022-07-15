@@ -1,0 +1,17 @@
+<div class="py-4 mb-2">
+  <h3 class="d-inline-block">Quiz Details</h3>
+
+  <div class="float-end">
+    <%= linkTo(quizzesPath(), {class: "btn btn-info"}) { %>
+      Back to all Quizzes
+    <% } %>
+    <%= linkTo(editQuizPath({ quiz_id: quiz.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+    <%= linkTo(quizPath({ quiz_id: quiz.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+  </div>
+</div>
+
+
+
+<ul class="list-group mb-2 ">
+
+</ul>

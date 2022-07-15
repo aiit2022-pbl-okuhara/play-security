@@ -27,11 +27,11 @@ func (q Quiz) String() string {
 	return string(jq)
 }
 
-// quizzes is not required by pop and may be deleted
-type quizzes []Quiz
+// Quizzes is not required by pop and may be deleted
+type Quizzes []Quiz
 
 // String is not required by pop and may be deleted
-func (q quizzes) String() string {
+func (q Quizzes) String() string {
 	jq, _ := json.Marshal(q)
 	return string(jq)
 }

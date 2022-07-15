@@ -1,0 +1,6 @@
+- id: "mypage.created.success"
+  translation: "Mypage was successfully created."
+- id: "mypage.updated.success"
+  translation: "Mypage was successfully updated."
+- id: "mypage.destroyed.success"
+  translation: "Mypage was successfully destroyed."

@@ -1,0 +1,6 @@
+- id: "scenario.created.success"
+  translation: "Scenario was successfully created."
+- id: "scenario.updated.success"
+  translation: "Scenario was successfully updated."
+- id: "scenario.destroyed.success"
+  translation: "Scenario was successfully destroyed."

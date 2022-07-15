@@ -92,6 +92,9 @@ func App() *buffalo.App {
 		app.GET("/signout", AuthDestroy)
 		app.Middleware.Skip(Authorize, HomeHandler, UsersNew, UsersCreate, AuthNew, AuthCreate)
 
+		app.Resource("/scenarios", ScenariosResource{})
+		app.Resource("/quizzes", QuizzesResource{})
+		app.Resource("/mypages", MypagesResource{})
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	}
 

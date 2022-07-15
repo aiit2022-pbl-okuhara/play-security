@@ -1,0 +1,33 @@
+<div class="py-4 mb-2">
+  <h3 class="d-inline-block">Scenarios</h3>
+  <div class="float-end">
+    <%= linkTo(newScenariosPath(), {class: "btn btn-primary"}) { %>
+      Create New Scenario
+    <% } %>
+  </div>
+</div>
+
+<table class="table table-hover table-bordered">
+  <thead class="thead-light">
+    
+    <th>&nbsp;</th>
+  </thead>
+  <tbody>
+    <%= for (scenario) in scenarios { %>
+      <tr>
+        
+        <td>
+          <div class="float-end">
+            <%= linkTo(scenarioPath({ scenario_id: scenario.ID }), {class: "btn btn-info", body: "View"}) %>
+            <%= linkTo(editScenarioPath({ scenario_id: scenario.ID }), {class: "btn btn-warning", body: "Edit"}) %>
+            <%= linkTo(scenarioPath({ scenario_id: scenario.ID }), {class: "btn btn-danger", "data-method": "DELETE", "data-confirm": "Are you sure?", body: "Destroy"}) %>
+          </div>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= paginator(pagination) %>
+</div>
