@@ -93,6 +93,8 @@ func App() *buffalo.App {
 		app.Middleware.Skip(Authorize, HomeHandler, UsersNew, UsersCreate, AuthNew, AuthCreate)
 
 		app.GET("/mypage", MypageHandler)
+		app.GET("/scenarios", ScenariosList)
+		app.GET("/scenarios/{scenario_id}", ScenariosShow)
 
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	}

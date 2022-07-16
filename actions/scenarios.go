@@ -1,0 +1,17 @@
+package actions
+
+import (
+	"net/http"
+
+	"github.com/gobuffalo/buffalo"
+)
+
+// ScenariosList default implementation.
+func ScenariosList(c buffalo.Context) error {
+	return c.Render(http.StatusOK, r.HTML("scenarios/index.html"))
+}
+
+// ScenariosShow default implementation.
+func ScenariosShow(c buffalo.Context) error {
+	return c.Render(http.StatusOK, r.HTML("scenarios/show.html"))
+}

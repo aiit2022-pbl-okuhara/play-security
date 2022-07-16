@@ -37,6 +37,7 @@ require (
 	github.com/gobuffalo/fizz v1.14.0 // indirect
 	github.com/gobuffalo/flect v0.2.5 // indirect
 	github.com/gobuffalo/github_flavored_markdown v1.1.1 // indirect
+	github.com/gobuffalo/grift v1.5.1 // indirect
 	github.com/gobuffalo/helpers v0.6.4 // indirect
 	github.com/gobuffalo/httptest v1.5.1 // indirect
 	github.com/gobuffalo/logger v1.0.6 // indirect
@@ -81,12 +82,12 @@ require (
 	github.com/sourcegraph/syntaxhighlight v0.0.0-20170531221838-bd320f5d308e // indirect
 	github.com/spf13/cobra v1.4.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.7.1 // indirect
+	github.com/stretchr/testify v1.8.0 // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20211205182925-97ca703d548d // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
