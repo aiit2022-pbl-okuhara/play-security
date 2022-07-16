@@ -15,3 +15,8 @@ func ScenariosList(c buffalo.Context) error {
 func ScenariosShow(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("scenarios/show.html"))
 }
+
+// ScenariosResult default implementation.
+func ScenariosResult(c buffalo.Context) error {
+	return c.Render(http.StatusOK, r.HTML("scenarios/result.html"))
+}

@@ -13,7 +13,6 @@ require (
 	github.com/gobuffalo/nulls v0.4.1
 	github.com/gobuffalo/pop/v6 v6.0.4
 	github.com/gobuffalo/suite/v4 v4.0.2
-	github.com/gobuffalo/uuid v2.0.5+incompatible
 	github.com/gobuffalo/validate/v3 v3.3.1
 	github.com/gofrs/uuid v4.2.0+incompatible
 	github.com/markbates/grift v1.5.0
@@ -37,7 +36,6 @@ require (
 	github.com/gobuffalo/fizz v1.14.0 // indirect
 	github.com/gobuffalo/flect v0.2.5 // indirect
 	github.com/gobuffalo/github_flavored_markdown v1.1.1 // indirect
-	github.com/gobuffalo/grift v1.5.1 // indirect
 	github.com/gobuffalo/helpers v0.6.4 // indirect
 	github.com/gobuffalo/httptest v1.5.1 // indirect
 	github.com/gobuffalo/logger v1.0.6 // indirect
@@ -62,6 +60,7 @@ require (
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/karrick/godirwalk v1.16.1 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
+	github.com/kr/pretty v0.3.0 // indirect
 	github.com/luna-duclos/instrumentedsql v1.1.3 // indirect
 	github.com/markbates/oncer v1.0.0 // indirect
 	github.com/markbates/refresh v1.12.0 // indirect
