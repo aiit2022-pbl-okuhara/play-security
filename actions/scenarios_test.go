@@ -19,3 +19,13 @@ func (as *ActionSuite) Test_ScenariosResult() {
 	as.Equal(http.StatusFound, res.Code)
 	as.Equal(res.Location(), "/signin")
 }
+
+func (as *ActionSuite) Test_ScenariosQuizzesShow() {
+	res := as.HTML("/scenarios/1/quizzes/1").Get()
+	as.Equal(http.StatusFound, res.Code)
+	as.Equal(res.Location(), "/signin")
+}
+
+func (as *ActionSuite) Test_ScenariosQuizzesAnswer() {
+
+}

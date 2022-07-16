@@ -80,6 +80,8 @@ func App() *buffalo.App {
 		app.GET("/mypage", MypageHandler)
 		app.GET("/scenarios", ScenariosList)
 		app.GET("/scenarios/{scenario_id}", ScenariosShow)
+		app.GET("/scenarios/{scenario_id}/quizzes/{scenario_quiz_id}", ScenariosQuizzesShow)
+		app.POST("/scenarios/{scenario_id}/quizzes/{scenario_quiz_id}", ScenariosQuizzesAnswer)
 		app.GET("/scenarios/{scenario_id}/result", ScenariosResult)
 
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory

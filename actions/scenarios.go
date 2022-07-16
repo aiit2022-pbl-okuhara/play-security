@@ -20,3 +20,13 @@ func ScenariosShow(c buffalo.Context) error {
 func ScenariosResult(c buffalo.Context) error {
 	return c.Render(http.StatusOK, r.HTML("scenarios/result.html"))
 }
+
+// ScenariosQuizzesShow default implementation.
+func ScenariosQuizzesShow(c buffalo.Context) error {
+	return c.Render(http.StatusOK, r.HTML("scenarios/quizzes/show.html"))
+}
+
+// ScenariosQuizzesAnswer default implementation.
+func ScenariosQuizzesAnswer(c buffalo.Context) error {
+	return nil
+}
