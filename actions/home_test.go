@@ -6,7 +6,7 @@ import (
 
 func (as *ActionSuite) Test_HomeHandler() {
 	res := as.HTML("/").Get()
-	as.Equal(200, res.Code)
+	as.Equal(http.StatusOK, res.Code)
 }
 
 func (as *ActionSuite) Test_HomeHandler_LoggedIn() {
