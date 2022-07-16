@@ -92,6 +92,8 @@ func App() *buffalo.App {
 		app.GET("/signout", AuthDestroy)
 		app.Middleware.Skip(Authorize, HomeHandler, UsersNew, UsersCreate, AuthNew, AuthCreate)
 
+		app.GET("/mypage", MypageHandler)
+
 		app.ServeFiles("/", http.FS(public.FS())) // serve files from the public directory
 	}
 
@@ -104,7 +106,7 @@ func App() *buffalo.App {
 // for more information: https://gobuffalo.io/en/docs/localization
 func translations() buffalo.MiddlewareFunc {
 	var err error
-	if T, err = i18n.New(locales.FS(), "ja-JP"); err != nil {
+	if T, err = i18n.New(locales.FS(), "en-US"); err != nil {
 		if err := app.Stop(err); err != nil {
 			return nil
 		}
