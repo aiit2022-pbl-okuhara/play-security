@@ -26,7 +26,9 @@ func UsersCreate(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	// find an organization by display_id
-	err := tx.Where("display_id = ?", u.DisplayID).First(o)
+	if err := tx.Where("display_id = ?", u.DisplayID).First(o); err != nil {
+		return errors.WithStack(err)
+	}
 	u.OrganizationID = o.ID
 
 	verrs, err := u.Create(tx)

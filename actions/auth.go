@@ -36,10 +36,12 @@ func AuthCreate(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	// find an organization by display_id
-	err := tx.Where("display_id = ?", u.DisplayID).First(o)
+	if err := tx.Where("display_id = ?", u.DisplayID).First(o); err != nil {
+		return errors.WithStack(err)
+	}
 
 	// find a user with the email and organization_id
-	err = tx.Where("email = ?", strings.ToLower(strings.TrimSpace(u.Email))).Where("organization_id = ?", o.ID).First(u)
+	err := tx.Where("email = ?", strings.ToLower(strings.TrimSpace(u.Email))).Where("organization_id = ?", o.ID).First(u)
 
 	// helper function to handle bad attempts
 	bad := func() error {

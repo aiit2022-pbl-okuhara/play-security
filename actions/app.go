@@ -105,7 +105,9 @@ func App() *buffalo.App {
 func translations() buffalo.MiddlewareFunc {
 	var err error
 	if T, err = i18n.New(locales.FS(), "ja-JP"); err != nil {
-		app.Stop(err)
+		if err := app.Stop(err); err != nil {
+			return nil
+		}
 	}
 	return T.Middleware()
 }
