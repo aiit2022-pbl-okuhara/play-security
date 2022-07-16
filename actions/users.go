@@ -79,7 +79,7 @@ func Authorize(next buffalo.Handler) buffalo.Handler {
 			}
 
 			c.Flash().Add("danger", "You must be authorized to see that page")
-			return c.Redirect(http.StatusFound, "/auth/new")
+			return c.Redirect(http.StatusFound, "/signin")
 		}
 		return next(c)
 	}
