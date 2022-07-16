@@ -1,6 +1,8 @@
 package actions
 
 import (
+	"net/http"
+
 	"github.com/aiit2022-pbl-okuhara/play-security/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
@@ -12,7 +14,7 @@ func UsersNew(c buffalo.Context) error {
 	u := models.User{}
 	u.DisplayID = 1
 	c.Set("user", u)
-	return c.Render(200, r.HTML("users/new.plush.html"))
+	return c.Render(http.StatusOK, r.HTML("users/new.plush.html"))
 }
 
 // UsersCreate registers a new user with the application.
@@ -26,7 +28,9 @@ func UsersCreate(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	// find an organization by display_id
-	err := tx.Where("display_id = ?", u.DisplayID).First(o)
+	if err := tx.Where("display_id = ?", u.DisplayID).First(o); err != nil {
+		return errors.WithStack(err)
+	}
 	u.OrganizationID = o.ID
 
 	verrs, err := u.Create(tx)
@@ -37,13 +41,13 @@ func UsersCreate(c buffalo.Context) error {
 	if verrs.HasAny() {
 		c.Set("user", u)
 		c.Set("errors", verrs)
-		return c.Render(200, r.HTML("users/new.plush.html"))
+		return c.Render(http.StatusOK, r.HTML("users/new.plush.html"))
 	}
 
 	c.Session().Set("current_user_id", u.ID)
 	c.Flash().Add("success", "Welcome to Buffalo!")
 
-	return c.Redirect(302, "/")
+	return c.Redirect(http.StatusFound, "/")
 }
 
 // SetCurrentUser attempts to find a user based on the current_user_id
@@ -75,7 +79,7 @@ func Authorize(next buffalo.Handler) buffalo.Handler {
 			}
 
 			c.Flash().Add("danger", "You must be authorized to see that page")
-			return c.Redirect(302, "/auth/new")
+			return c.Redirect(http.StatusFound, "/signin")
 		}
 		return next(c)
 	}

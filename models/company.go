@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+	"strings"
 	"time"
 
 	"github.com/gobuffalo/pop/v6"
@@ -16,6 +17,11 @@ type Company struct {
 	CreatedAt     time.Time      `json:"created_at" db:"created_at"`
 	UpdatedAt     time.Time      `json:"updated_at" db:"updated_at"`
 	Organizations []Organization `json:"organizations,omitempty" has_many:"organizations"`
+}
+
+func (c *Company) Create(tx *pop.Connection) (*validate.Errors, error) {
+	c.Name = strings.Trim(c.Name, " ")
+	return tx.ValidateAndCreate(c)
 }
 
 // String is not required by pop and may be deleted

@@ -13,15 +13,10 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// AuthLanding shows a landing page to login
-func AuthLanding(c buffalo.Context) error {
-	return c.Render(200, r.HTML("auth/landing.plush.html"))
-}
-
 // AuthNew loads the signin page
 func AuthNew(c buffalo.Context) error {
 	c.Set("user", models.User{})
-	return c.Render(200, r.HTML("auth/new.plush.html"))
+	return c.Render(http.StatusOK, r.HTML("auth/new.plush.html"))
 }
 
 // AuthCreate attempts to log the user in with an existing account.
@@ -36,10 +31,12 @@ func AuthCreate(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	// find an organization by display_id
-	err := tx.Where("display_id = ?", u.DisplayID).First(o)
+	if err := tx.Where("display_id = ?", u.DisplayID).First(o); err != nil {
+		return errors.WithStack(err)
+	}
 
 	// find a user with the email and organization_id
-	err = tx.Where("email = ?", strings.ToLower(strings.TrimSpace(u.Email))).Where("organization_id = ?", o.ID).First(u)
+	err := tx.Where("email = ?", strings.ToLower(strings.TrimSpace(u.Email))).Where("organization_id = ?", o.ID).First(u)
 
 	// helper function to handle bad attempts
 	bad := func() error {
@@ -73,12 +70,12 @@ func AuthCreate(c buffalo.Context) error {
 		redirectURL = redir
 	}
 
-	return c.Redirect(302, redirectURL)
+	return c.Redirect(http.StatusFound, redirectURL)
 }
 
 // AuthDestroy clears the session and logs a user out
 func AuthDestroy(c buffalo.Context) error {
 	c.Session().Clear()
 	c.Flash().Add("success", "You have been logged out!")
-	return c.Redirect(302, "/")
+	return c.Redirect(http.StatusFound, "/")
 }

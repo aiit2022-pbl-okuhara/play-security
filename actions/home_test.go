@@ -1,30 +1,26 @@
 package actions
 
-import "github.com/aiit2022-pbl-okuhara/play-security/models"
+import (
+	"net/http"
+)
 
 func (as *ActionSuite) Test_HomeHandler() {
 	res := as.HTML("/").Get()
-	as.Equal(302, res.Code)
-	as.Equal(res.Location(), "/auth/new")
+	as.Equal(http.StatusOK, res.Code)
 }
 
 func (as *ActionSuite) Test_HomeHandler_LoggedIn() {
-	u := &models.User{
-		Email:                "mark@example.com",
-		Password:             "password",
-		PasswordConfirmation: "password",
-	}
-	verrs, err := u.Create(as.DB)
+	c, err := as.createCompany()
 	as.NoError(err)
-	as.False(verrs.HasAny())
+	o, err := as.createOrganization(c)
+	as.NoError(err)
+	u, err := as.createUser(o)
+	as.NoError(err)
+
 	as.Session.Set("current_user_id", u.ID)
 
-	res := as.HTML("/auth").Get()
-	as.Equal(200, res.Code)
-	as.Contains(res.Body.String(), "Sign Out")
-
 	as.Session.Clear()
-	res = as.HTML("/auth").Get()
-	as.Equal(200, res.Code)
+	res := as.HTML("/signin").Get()
+	as.Equal(http.StatusOK, res.Code)
 	as.Contains(res.Body.String(), "Sign In")
 }
