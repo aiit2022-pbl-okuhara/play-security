@@ -20,6 +20,10 @@ type QuizOption struct {
 	ScenarioQuizOptions []ScenarioQuizOption `json:"scenario_quiz_options,omitempty" has_many:"scenario_quiz_options"`
 }
 
+func (q *QuizOption) Create(tx *pop.Connection) (*validate.Errors, error) {
+	return tx.ValidateAndCreate(q)
+}
+
 // String is not required by pop and may be deleted
 func (q QuizOption) String() string {
 	jq, _ := json.Marshal(q)

@@ -20,6 +20,10 @@ type StoryTagging struct {
 	Tag       *Tag      `json:"tag,omitempty" belongs_to:"tag"`
 }
 
+func (s *StoryTagging) Create(tx *pop.Connection) (*validate.Errors, error) {
+	return tx.ValidateAndCreate(s)
+}
+
 // String is not required by pop and may be deleted
 func (s StoryTagging) String() string {
 	js, _ := json.Marshal(s)

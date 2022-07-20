@@ -27,6 +27,10 @@ type Scenario struct {
 	UserQuizHistories     []UserQuizHistory     `json:"user_quiz_histories,omitempty" has_many:"user_quiz_histories"`
 }
 
+func (s *Scenario) Create(tx *pop.Connection) (*validate.Errors, error) {
+	return tx.ValidateAndCreate(s)
+}
+
 // String is not required by pop and may be deleted
 func (s Scenario) String() string {
 	js, _ := json.Marshal(s)

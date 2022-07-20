@@ -20,6 +20,10 @@ type Role struct {
 	Scenarios      []Scenario    `json:"scenarios,omitempty" has_many:"scenarios"`
 }
 
+func (r *Role) Create(tx *pop.Connection) (*validate.Errors, error) {
+	return tx.ValidateAndCreate(r)
+}
+
 // String is not required by pop and may be deleted
 func (r Role) String() string {
 	jr, _ := json.Marshal(r)
