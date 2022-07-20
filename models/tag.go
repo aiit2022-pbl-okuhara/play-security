@@ -18,6 +18,10 @@ type Tag struct {
 	StoryTaggings []StoryTagging `json:"story_taggings,omitempty" has_many:"story_taggings"`
 }
 
+func (t *Tag) Create(tx *pop.Connection) (*validate.Errors, error) {
+	return tx.ValidateAndCreate(t)
+}
+
 // String is not required by pop and may be deleted
 func (t Tag) String() string {
 	jt, _ := json.Marshal(t)

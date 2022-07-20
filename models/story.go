@@ -21,6 +21,10 @@ type Story struct {
 	Scenarios      []Scenario     `json:"scenarios,omitempty" has_many:"scenarios"`
 }
 
+func (s *Story) Create(tx *pop.Connection) (*validate.Errors, error) {
+	return tx.ValidateAndCreate(s)
+}
+
 // String is not required by pop and may be deleted
 func (s Story) String() string {
 	js, _ := json.Marshal(s)
