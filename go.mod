@@ -6,6 +6,7 @@ require (
 	github.com/gobuffalo/buffalo v0.18.7
 	github.com/gobuffalo/buffalo-pop/v3 v3.0.4
 	github.com/gobuffalo/envy v1.10.1
+	github.com/gobuffalo/grift v1.5.1
 	github.com/gobuffalo/mw-csrf v1.0.0
 	github.com/gobuffalo/mw-forcessl v0.0.0-20220514125302-be60179938a4
 	github.com/gobuffalo/mw-i18n/v2 v2.0.1
@@ -15,7 +16,6 @@ require (
 	github.com/gobuffalo/suite/v4 v4.0.2
 	github.com/gobuffalo/validate/v3 v3.3.1
 	github.com/gofrs/uuid v4.2.0+incompatible
-	github.com/markbates/grift v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/unrolled/secure v1.10.0
 	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
@@ -36,7 +36,6 @@ require (
 	github.com/gobuffalo/fizz v1.14.0 // indirect
 	github.com/gobuffalo/flect v0.2.5 // indirect
 	github.com/gobuffalo/github_flavored_markdown v1.1.1 // indirect
-	github.com/gobuffalo/grift v1.5.1 // indirect
 	github.com/gobuffalo/helpers v0.6.4 // indirect
 	github.com/gobuffalo/httptest v1.5.1 // indirect
 	github.com/gobuffalo/logger v1.0.6 // indirect
@@ -61,8 +60,8 @@ require (
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/karrick/godirwalk v1.16.1 // indirect
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
-	github.com/kr/pretty v0.3.0 // indirect
 	github.com/luna-duclos/instrumentedsql v1.1.3 // indirect
+	github.com/markbates/grift v1.5.0 // indirect
 	github.com/markbates/oncer v1.0.0 // indirect
 	github.com/markbates/refresh v1.12.0 // indirect
 	github.com/markbates/safe v1.0.1 // indirect
