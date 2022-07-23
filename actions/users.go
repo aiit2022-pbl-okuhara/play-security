@@ -56,11 +56,15 @@ func SetCurrentUser(next buffalo.Handler) buffalo.Handler {
 	return func(c buffalo.Context) error {
 		if uid := c.Session().Get("current_user_id"); uid != nil {
 			u := &models.User{}
+			o := &models.Organization{}
 			tx := c.Value("tx").(*pop.Connection)
-			err := tx.Find(u, uid)
-			if err != nil {
+			if err := tx.Find(u, uid); err != nil {
 				return errors.WithStack(err)
 			}
+			if err := tx.Find(o, u.OrganizationID); err != nil {
+				return errors.WithStack(err)
+			}
+			u.DisplayID = o.DisplayID
 			c.Set("current_user", u)
 		}
 		return next(c)
