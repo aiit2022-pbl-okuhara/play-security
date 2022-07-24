@@ -25,6 +25,7 @@
     </style>
   </head>
   <body>
+    <%= if (current_path != signinPath()) { %>
     <!-- Header -->
     <header>
       <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
@@ -82,18 +83,21 @@
         </div>
       </nav>
     </header>
+    <% } %>
   
-    <div class="container mt-5">
+    <main>
       <%= partial("flash.html") %>
       <%= yield %>
-    </div>
+    </main>
 
+    <%= if (current_path != signinPath()) { %>
     <!-- Footer -->
     <footer class="container">
       <hr>
       <p class="float-end"><a href="#">Back to top</a></p>
       <p class="text-muted">&copy; 2022 aiit2022-pbl-okuhara</p>
     </footer>
+    <% } %>
     
     <%= javascriptTag("application.js") %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
