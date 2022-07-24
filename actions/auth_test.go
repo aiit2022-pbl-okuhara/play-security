@@ -7,7 +7,7 @@ import (
 func (as *ActionSuite) Test_Auth_New() {
 	res := as.HTML("/signin").Get()
 	as.Equal(http.StatusOK, res.Code)
-	as.Contains(res.Body.String(), "Sign In")
+	as.Contains(res.Body.String(), "ログイン")
 }
 
 func (as *ActionSuite) Test_Auth_Create() {
@@ -35,7 +35,7 @@ func (as *ActionSuite) Test_Auth_Create_UnknownUser() {
 	u.PasswordConfirmation = ""
 	res := as.HTML("/signin").Post(u)
 	as.Equal(http.StatusUnauthorized, res.Code)
-	as.Contains(res.Body.String(), "invalid email/password")
+	as.Contains(res.Body.String(), "ログインできませんでした")
 }
 
 func (as *ActionSuite) Test_Auth_Create_InvalidPassword() {
@@ -49,5 +49,5 @@ func (as *ActionSuite) Test_Auth_Create_InvalidPassword() {
 	u.Password = "invalid"
 	res := as.HTML("/signin").Post(u)
 	as.Equal(http.StatusUnauthorized, res.Code)
-	as.Contains(res.Body.String(), "invalid email/password")
+	as.Contains(res.Body.String(), "ログインできませんでした")
 }
