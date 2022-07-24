@@ -22,5 +22,5 @@ func (as *ActionSuite) Test_HomeHandler_LoggedIn() {
 	as.Session.Clear()
 	res := as.HTML("/signin").Get()
 	as.Equal(http.StatusOK, res.Code)
-	as.Contains(res.Body.String(), "Sign In")
+	as.Contains(res.Body.String(), "ログイン")
 }
